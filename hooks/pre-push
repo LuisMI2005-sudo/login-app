@@ -1,0 +1,12 @@
+#!/bin/sh
+# Hook nativo de Git: verifica los cinco tests antes de enviar commits.
+root="$(git rev-parse --show-toplevel)" || exit 1
+if [ -x "$root/.venv/Scripts/python.exe" ]; then
+    python="$root/.venv/Scripts/python.exe"
+elif [ -x "$root/.venv/bin/python" ]; then
+    python="$root/.venv/bin/python"
+else
+    echo "PUSH BLOQUEADO: falta el entorno .venv del login." >&2
+    exit 1
+fi
+exec "$python" -B "$root/hooks/git_pre_push.py"
