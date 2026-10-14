@@ -1,0 +1,64 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/proteger_archivos.py\"",
+            "timeout": 10,
+            "commandWindows": "& \"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/proteger_archivos.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/bloquear_comandos.py\"",
+            "timeout": 60,
+            "commandWindows": "& \"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/bloquear_comandos.py\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/ejecutar_tests.py\"",
+            "timeout": 60,
+            "commandWindows": "& \"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/ejecutar_tests.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/auditoria.py\"",
+            "timeout": 10,
+            "commandWindows": "& \"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/auditoria.py\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/auditoria.py\"",
+            "timeout": 10,
+            "commandWindows": "& \"C:/Users/HP/Practica clase 14/login-app/.venv/Scripts/python.exe\" -B \"C:/Users/HP/Practica clase 14/login-app/.codex/hooks/auditoria.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

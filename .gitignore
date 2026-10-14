@@ -1,0 +1,7 @@
+.venv/
+instance/
+__pycache__/
+*.py[cod]
+
+.codex/auditoria.log
+.claude/auditoria.log

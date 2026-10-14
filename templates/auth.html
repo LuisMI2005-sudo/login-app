@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Crear cuenta' if mode == 'register' else 'Iniciar sesión' }} · Aula{% endblock %}
+{% block content %}
+<main class="auth-shell">
+  <section class="story-panel" aria-label="Bienvenida">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark" aria-hidden="true">a</span> aula<span class="brand-dot">.</span></a>
+    <div class="story-copy">
+      <span class="eyebrow">UN ESPACIO PARA TI</span>
+      <h2>Todo empieza<br>con un <em>hola.</em></h2>
+      <p>Un acceso simple a tu espacio personal.<br>Entra, hazlo tuyo y continúa.</p>
+      <div class="illustration" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="floating-card"><span class="card-icon">a</span><span>Tu espacio<br><strong>A tu manera.</strong></span><span class="card-check">✓</span></div>
+        <span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span>
+        <span class="spark">✳</span>
+      </div>
+    </div>
+    <div class="story-footer"><span class="tiny-dot"></span> Un buen lugar para empezar.</div>
+  </section>
+  <section class="form-panel">
+    <div class="top-note">{{ '¿Ya tienes cuenta?' if mode == 'register' else '¿Es tu primera vez?' }}
+      <a href="{{ url_for('login' if mode == 'register' else 'register') }}">{{ 'Inicia sesión' if mode == 'register' else 'Crea una cuenta' }} <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="form-wrap">
+      <span class="eyebrow">{{ 'EMPECEMOS' if mode == 'register' else 'BIENVENIDO DE VUELTA' }}</span>
+      <h1>{{ 'Crea tu cuenta.' if mode == 'register' else 'Qué bueno verte.' }}</h1>
+      <p class="intro">{{ 'Unos pocos datos y tu espacio estará listo.' if mode == 'register' else 'Ingresa tus datos para continuar.' }}</p>
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="notice {{ category }}" role="alert">{{ message }}</div>
+      {% endfor %}
+      <form method="post" action="{{ url_for('register' if mode == 'register' else 'login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {% if mode == 'register' %}
+        <label for="nombre">Tu nombre</label>
+        <input id="nombre" name="nombre" autocomplete="name" placeholder="Cómo te llamas" minlength="2" maxlength="80" required value="{{ request.form.get('nombre', '') }}">
+        {% endif %}
+        <label for="email">Correo electrónico</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="tu@correo.com" maxlength="254" required value="{{ request.form.get('email', '') }}">
+        <label for="password">Contraseña</label>
+        <div class="password-field">
+          <input id="password" name="password" type="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" placeholder="{{ 'Elige una contraseña' if mode == 'register' else 'Tu contraseña' }}" {% if mode == 'register' %}minlength="8"{% endif %} maxlength="128" required>
+          <button class="password-toggle" type="button" data-password="password" aria-label="Mostrar contraseña" aria-pressed="false">Ver</button>
+        </div>
+        {% if mode == 'register' %}
+        <p class="field-help">Usa entre 8 y 128 caracteres.</p>
+        <label for="confirm_password">Confirma tu contraseña</label>
+        <div class="password-field">
+          <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" placeholder="Escríbela una vez más" minlength="8" maxlength="128" required>
+          <button class="password-toggle" type="button" data-password="confirm_password" aria-label="Mostrar confirmación de contraseña" aria-pressed="false">Ver</button>
+        </div>
+        {% endif %}
+        <button class="primary-button" type="submit">{{ 'Crear mi cuenta' if mode == 'register' else 'Iniciar sesión' }} <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="form-footnote"><span aria-hidden="true">◇</span> Tu cuenta. Tu espacio.</p>
+    </div>
+    <footer class="page-footer">Aula © 2026 <span>Hecho para empezar.</span></footer>
+  </section>
+</main>
+{% endblock %}

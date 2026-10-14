@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Vuelve a intentarlo · Aula{% endblock %}
+{% block content %}
+<main class="error-page"><span class="brand-mark">a</span><h1>Una pausa breve.</h1><p>{{ message }}</p><a class="primary-button" href="{{ url_for('index') }}">Volver a mi cuenta →</a></main>
+{% endblock %}

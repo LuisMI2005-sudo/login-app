@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Mi cuenta · Aula{% endblock %}
+{% block content %}
+<div class="dashboard-shell">
+  <header class="dashboard-header">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark" aria-hidden="true">a</span> aula<span class="brand-dot">.</span></a>
+    <form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="logout-button" type="submit">Cerrar sesión <span aria-hidden="true">↗</span></button></form>
+  </header>
+  <main class="dashboard-content">
+    <span class="session-badge"><span class="tiny-dot"></span> Sesión activa</span>
+    <h1>Hola, {{ g.user['nombre'] }}<span class="wave" aria-hidden="true">✳</span></h1>
+    <p class="dashboard-intro">Ya estás en tu espacio. Qué bueno tenerte aquí.</p>
+    <section class="profile-card" aria-labelledby="profile-title">
+      <div class="profile-card-header"><span class="avatar">{{ g.user['nombre'][0]|upper }}</span><div><h2 id="profile-title">Tu perfil</h2><p>Los datos de tu cuenta</p></div><span class="profile-label">MI CUENTA</span></div>
+      <dl><div><dt>Nombre</dt><dd>{{ g.user['nombre'] }}</dd></div><div><dt>Correo electrónico</dt><dd>{{ g.user['email'] }}</dd></div><div><dt>Miembro desde</dt><dd>{{ g.user['creado_en'][:10] }}</dd></div></dl>
+    </section>
+    <div class="welcome-note"><span aria-hidden="true">↗</span><p><strong>Este espacio es tuyo.</strong><br>Puedes volver cuando quieras con tu correo y contraseña.</p></div>
+  </main>
+  <footer class="dashboard-footer">Aula © 2026 <span>Tu cuenta. Tu espacio.</span></footer>
+</div>
+{% endblock %}
