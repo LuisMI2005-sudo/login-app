@@ -76,9 +76,12 @@ class AuthenticationTests(unittest.TestCase):
                 self.assertEqual(self.client.post("/login", data={"csrf_token": token}).status_code, 400)
         self.assertEqual(self.client.get("/logout").status_code, 405)
 
-    def test_demo_fallo_inicial_intencional(self):
-        # Solicitado para el primer push de la demo. No es un defecto del login.
-        self.fail("FALLO INTENCIONAL: primer push de la demostración. Pendiente de nuevas instrucciones.")
+    def test_failed_logins_are_limited(self):
+        self.register()
+        for _ in range(5):
+            self.assertEqual(self.login(password="incorrecta").status_code, 401)
+        # Después de cinco fallos, incluso la clave correcta espera al desbloqueo.
+        self.assertEqual(self.login().status_code, 429)
 
 
 if __name__ == "__main__":

@@ -52,11 +52,12 @@ Desde `login-app`:
 
 Las pruebas usan una base de datos temporal. Comprueban registro, acceso privado,
 contraseñas con hash, correos duplicados, validación, consultas parametrizadas,
-protección CSRF y persistencia. Esta entrega contiene exactamente **5 tests**:
-cuatro funcionales y `test_demo_fallo_inicial_intencional`, que falla expresamente para
-que el primer push muestre una ejecución roja en Actions. Ese fallo fue solicitado
-para la demostración y no afecta el uso del login. Queda pendiente de las siguientes
-instrucciones; por ahora la ejecución esperada es `Ran 5 tests` y `FAILED (failures=1)`.
+protección CSRF, persistencia y el límite de intentos de entrada. Hay exactamente
+**5 tests funcionales**; el resultado esperado es `Ran 5 tests` y `OK`.
+El primer commit conservó una prueba deliberadamente fallida para mostrar Actions en
+rojo. Tras comprobar el bloqueo del hook, esa prueba se sustituyó por una comprobación
+real de que cinco intentos incorrectos bloquean temporalmente el acceso.
+La secuencia se documenta en [DEMO-PUSH.md](DEMO-PUSH.md).
 
 ## Archivos
 

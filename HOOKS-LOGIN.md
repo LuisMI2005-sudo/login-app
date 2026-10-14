@@ -25,18 +25,30 @@ del ejemplo. Las rutas Windows se generan con comillas para la carpeta con espac
 
 ## Estado de los tests
 
-Se conservan exactamente 5 tests del login: cuatro deben aprobar y
-`test_demo_fallo_inicial_intencional` falla expresamente. Ese fallo independiente del
-login se mantiene para la demostración. El resultado esperado es:
+Se conservan exactamente **5 tests funcionales** y ahora deben aprobar todos.
+La prueba de fallo intencional del primer commit se reemplazó, con autorización del
+usuario, por una comprobación real del límite de intentos de login.
 
 ```text
 Ran 5 tests
-FAILED (failures=1)
+OK
 ```
 
-La configuración de Actions tampoco omite ni tolera ese fallo. Una vez que esta
-carpeta sea la raíz de un repositorio y se suba, el workflow debe quedar rojo.
-Los tests protegidos solo deben cambiarse con una instrucción explícita de la clase.
+## Hook nativo de Git
+
+`hooks/pre-push` y `hooks/git_pre_push.py` reutilizan la misma validación de cinco
+tests. Esta copia lo tiene instalado en `.git/hooks/pre-push`: un `git push` normal
+también se bloquea si las pruebas fallan. El hook informa el problema; la corrección
+del código o de una prueba autorizada la realiza el desarrollador o el agente.
+
+En una copia recién clonada se instala una vez con:
+
+```powershell
+.\instalar-hook-git.ps1
+```
+
+Las definiciones de Codex y Claude son independientes y requieren activación en el
+agente. El hook nativo se ejecuta directamente desde Git, incluso en una terminal.
 
 ## Uso en Windows
 
@@ -57,9 +69,8 @@ Para comprobar los tests directamente:
 .\.venv\Scripts\python.exe -B -m unittest discover -s tests -v
 ```
 
-Los hooks son del agente. Los comandos ejecutados manualmente en tu terminal no son
-interceptados por ellos. GitHub Actions valida el código después de recibir el push.
-La base de datos, las claves, las bitácoras y el entorno virtual quedan fuera de Git.
+GitHub Actions valida el código después de recibir el push. La base de datos,
+las claves, las bitácoras y el entorno virtual quedan fuera de Git.
 
-Esta etapa prepara archivos y mantiene el fallo intencional. No inicia un repositorio,
-no configura remotos y no publica nuevos commits.
+El repositorio público es https://github.com/LuisMI2005-sudo/login-app.
+Consulta DEMO-PUSH.md para la ejecución inicial roja y el bloqueo demostrado.
